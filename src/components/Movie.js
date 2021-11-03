@@ -10,14 +10,17 @@ const Movie = (props) => {
     const movies = [...props.movies];
     const movie = movies.find(movie=>movie.id===Number(id));
 
-
     const removeMovie=(id)=>{
         props.deleteMovie(id)
         push('/movies')
     }
-    const favoriteMovie =(id)=>{
-        props.addFavorite(id)
+    const favoriteMovie =(identity)=>{
+
+        const parse = parseInt(identity)
+        const spec = props.movies.filter(movie => (parse === movie.id))
+        props.addFavorite(spec)
         alert('this movie has been added to your favorites! :D')
+        
     }
 
     return(<div className="modal-page col">
@@ -60,6 +63,7 @@ const Movie = (props) => {
 }
 
 const mapStateToProps = state => {
+    console.log(state.fav.favorites)
     return {
         movies: state.films.movies
     }
